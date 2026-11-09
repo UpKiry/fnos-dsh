@@ -6,6 +6,8 @@ export type FnosTheme = 'light' | 'dark'
 
 /** Host-backed settings owned by the fnOS integration plugin. */
 export interface FnosSettings {
+  /** 是否在 iframe 外显示刷新与重启入口；缺省保持隐藏。 */
+  showWebActionsOutsideIframe?: boolean
   /** Last resolved fnOS theme while DSH is configured to follow the system. */
   systemTheme?: FnosTheme
   /** User-managed third-party plugin API URL path prefixes. */
@@ -19,6 +21,7 @@ export interface FnosSettings {
   authorizedDirectories?: string[]
 }
 
+export const FNOS_WEB_ACTIONS_OUTSIDE_IFRAME_FIELD = 'showWebActionsOutsideIframe'
 export const FNOS_SYSTEM_THEME_FIELD = 'systemTheme'
 export const FNOS_GATEWAY_PROXY_PATHS_FIELD = 'gatewayProxyPaths'
 export const FNOS_AUTHORIZED_DIRECTORIES_FIELD = 'authorizedDirectories'
@@ -30,6 +33,7 @@ export const FNOS_AUTHORIZED_DIRECTORIES_FIELD = 'authorizedDirectories'
  * reads these field names and must stay free of host-only dependencies.
  */
 export interface FnosConfig {
+  [FNOS_WEB_ACTIONS_OUTSIDE_IFRAME_FIELD]?: Volatile<boolean>
   [FNOS_SYSTEM_THEME_FIELD]?: Volatile<FnosTheme | undefined>
   [FNOS_GATEWAY_PROXY_PATHS_FIELD]: Volatile<string[]>
   [FNOS_AUTHORIZED_DIRECTORIES_FIELD]: Volatile<string[]>

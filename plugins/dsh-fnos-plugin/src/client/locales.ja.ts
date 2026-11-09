@@ -7,6 +7,9 @@ import type { FnosLocaleKey } from './locales.ts'
  */
 export const ja: { [Key in FnosLocaleKey]: string } = {
   title: 'fnos',
+  webActionsOutsideIframe: "iframe 外で更新・再起動ボタンを表示",
+  webActionsOutsideIframeDescription: "初期設定はオフです。有効にすると独立ウィンドウにボタンを表示します。再起動には fnOS ゲートウェイ経由のアクセスが必要です。",
+  webActionsSaveFailed: "ボタンの表示設定を保存できません。もう一度お試しください。",
   intro: 'DeepSeek Harness がアクセスできる NAS ディレクトリを管理します。',
   refresh: '更新',
   add: '認可ディレクトリを追加',

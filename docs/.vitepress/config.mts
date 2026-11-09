@@ -423,6 +423,10 @@ const requirementsSidebar = [
         text: 'FNOS-046 DSH 0.2.2-rc.1 插件适配与基线升级',
         link: '/requirements/FNOS-046-dsh-022-rc1-adaptation'
       },
+      {
+        text: 'FNOS-049 iframe 外显示刷新与重启入口',
+        link: '/requirements/FNOS-049-standalone-web-actions'
+      },
       ]
   }
 ]
@@ -616,6 +620,10 @@ const plansSidebar = [
         text: 'PLAN-FNOS-046 DSH 0.2.2-rc.1 插件适配与基线升级',
         link: '/plans/PLAN-FNOS-046-dsh-022-rc1-adaptation'
       },
+      {
+        text: 'PLAN-FNOS-049 iframe 外显示刷新与重启入口',
+        link: '/plans/PLAN-FNOS-049-standalone-web-actions'
+      },
     ]
   }
 ]
@@ -773,6 +781,10 @@ const testsSidebar = [
       {
         text: 'FNOS-045 应用与插件多语言支持',
         link: '/tests/FNOS-045-app-plugin-i18n'
+      },
+      {
+        text: 'FNOS-049 iframe 外显示刷新与重启入口',
+        link: '/tests/FNOS-049-standalone-web-actions'
       },
     ]
   }

@@ -2,6 +2,9 @@
 
 export const en = {
   title: 'fnos',
+  webActionsOutsideIframe: "Show refresh and restart outside iframes",
+  webActionsOutsideIframeDescription: "Off by default. Shows the sidebar buttons in standalone windows; restarting requires access through the fnOS gateway.",
+  webActionsSaveFailed: "Unable to save the button display setting. Please try again.",
   intro: 'Manage the NAS directories that DeepSeek Harness can access.',
   refresh: 'Refresh',
   add: 'Add authorized directory',
@@ -145,6 +148,9 @@ export type FnosLocaleKey = keyof typeof en
 
 export const zh: { [Key in FnosLocaleKey]: string } = {
   title: 'fnos',
+  webActionsOutsideIframe: "在 iframe 外显示刷新与重启按钮",
+  webActionsOutsideIframeDescription: "默认关闭。开启后在独立窗口显示侧边栏按钮；重启需要通过 fnOS 网关访问。",
+  webActionsSaveFailed: "无法保存按钮显示设置，请重试。",
   intro: '管理 DeepSeek Harness 可以访问的 NAS 目录。',
   refresh: '刷新',
   add: '添加授权目录',

@@ -233,14 +233,14 @@ export function apply(ctx: ClientContext): void {
     locale: namespace,
   }, (props: { subject?: FnosDetailSubject | undefined }) =>
     // 本文件是 `.ts`（无 JSX），因此用调用而不是元素字面量表达。
-    AuthorizedDirectoriesDetailSection({ t, subject: props.subject })))
+    AuthorizedDirectoriesDetailSection({ t, settings: fnosSettings, subject: props.subject })))
   ctx.slots.inject('sidebar.footer.action', () => ctx.slots.register({
     name: 'sidebar.footer.action',
     id: 'dsh-fnos-web-restart',
     order: 0,
     priority: -1,
     locale: namespace,
-    inject: () => ({ t }),
+    inject: () => ({ t, settings: fnosSettings }),
   }, FnosWebRestartAction))
 
   /**

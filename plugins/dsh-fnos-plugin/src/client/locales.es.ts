@@ -3,6 +3,9 @@ import type { FnosLocaleKey } from './locales.ts'
 /** Palabras en español (conjunto de claves impuesto por el tipo). */
 export const es: { [Key in FnosLocaleKey]: string } = {
   title: 'fnos',
+  webActionsOutsideIframe: "Mostrar Actualizar y Reiniciar fuera de iframes",
+  webActionsOutsideIframeDescription: "Desactivado por defecto. Muestra los botones en ventanas independientes; reiniciar requiere acceso mediante la puerta de enlace fnOS.",
+  webActionsSaveFailed: "No se pudo guardar la visibilidad de los botones. Inténtalo de nuevo.",
   intro: 'Gestiona los directorios del NAS a los que DeepSeek Harness puede acceder.',
   refresh: 'Actualizar',
   add: 'Añadir directorio autorizado',

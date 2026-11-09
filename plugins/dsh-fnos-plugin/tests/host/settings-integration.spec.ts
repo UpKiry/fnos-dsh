@@ -144,6 +144,27 @@ describe('dsh-fnos settings service integration', () => {
     await fiber.dispose()
   })
 
+  it('保存独立窗口入口开关时保留授权目录与代理路径，并可反向关闭', async () => {
+    const { harness, settings, fiber } = await bootSettings()
+    try {
+      await settings.update('dsh-fnos', { gatewayProxyPaths: ['/store/api'], authorizedDirectories: ['/shared'] })
+      await settings.update('dsh-fnos', { showWebActionsOutsideIframe: true })
+      expect(harness.stored()).toMatchObject({
+        showWebActionsOutsideIframe: true,
+        gatewayProxyPaths: ['/store/api'],
+        authorizedDirectories: ['/shared'],
+      })
+      // 桩仅模拟持久层；实时配置由真实 Loader 更新，因此这里核对用户覆盖层。
+      expect(settings.describe().find(row => row.ns === 'dsh-fnos')?.user).toMatchObject({ showWebActionsOutsideIframe: true })
+      await settings.update('dsh-fnos', { showWebActionsOutsideIframe: false })
+      expect(harness.stored().showWebActionsOutsideIframe).toBe(false)
+      await expect(settings.update('dsh-fnos', { showWebActionsOutsideIframe: 'true' })).rejects.toBeDefined()
+    }
+    finally {
+      await fiber.dispose()
+    }
+  })
+
   it('keeps the earlier paths when a later theme write merges into the patch', async () => {
     const { harness, settings, fiber } = await bootSettings()
 

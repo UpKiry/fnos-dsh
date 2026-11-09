@@ -296,10 +296,25 @@ describe('dsh-fnos settings entry contract', () => {
     const json = FnosSettingsSchema.toJSON() as unknown as SerializedSchema
     const root = json.refs[json.uid] as SerializedSchemaNode
     const dict = root.dict ?? {}
-    expect(Object.keys(dict).sort()).toEqual(['authorizedDirectories', 'gatewayProxyPaths', 'systemTheme'])
-    for (const field of ['authorizedDirectories', 'gatewayProxyPaths', 'systemTheme']) {
+    expect(Object.keys(dict).sort()).toEqual(['authorizedDirectories', 'gatewayProxyPaths', 'showWebActionsOutsideIframe', 'systemTheme'])
+    for (const field of ['authorizedDirectories', 'gatewayProxyPaths', 'showWebActionsOutsideIframe', 'systemTheme']) {
       expect(json.refs[dict[field] as number]?.meta?.volatile, field).toBe(true)
     }
+  })
+
+  it('独立窗口入口默认关闭，且只接受布尔值', () => {
+    for (const [input, expected] of [[{}, false], [{ showWebActionsOutsideIframe: false }, false], [{ showWebActionsOutsideIframe: true }, true]] as const) {
+      const parsed = acceptedValue(input) as Record<string, unknown>
+      expect(volatileValue(parsed.showWebActionsOutsideIframe as never)).toBe(expected)
+    }
+    expect(issuesOf({ showWebActionsOutsideIframe: 'true' })).toBeDefined()
+  })
+
+  it('为入口开关提供九种语言的配置说明', () => {
+    const fields = FnosSettingsSchema.dict ?? {}
+    const descriptions = fields.showWebActionsOutsideIframe?.meta.description
+    expect(typeof descriptions).toBe('object')
+    expect(Object.keys(descriptions ?? {}).sort()).toEqual(['de', 'en', 'es', 'fr', 'it', 'ja', 'ko', 'ru', 'zh'])
   })
 
   it('defaults the persisted authorized directories to an empty list', () => {

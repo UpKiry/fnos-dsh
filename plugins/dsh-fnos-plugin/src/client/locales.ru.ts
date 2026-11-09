@@ -3,6 +3,9 @@ import type { FnosLocaleKey } from './locales.ts'
 /** Русский словарь (набор ключей задан типом). */
 export const ru: { [Key in FnosLocaleKey]: string } = {
   title: 'fnos',
+  webActionsOutsideIframe: "Показывать обновление и перезапуск вне iframe",
+  webActionsOutsideIframeDescription: "По умолчанию выключено. Показывает кнопки в отдельных окнах; для перезапуска нужен доступ через шлюз fnOS.",
+  webActionsSaveFailed: "Не удалось сохранить настройку отображения кнопок. Повторите попытку.",
   intro: 'Управление каталогами NAS, к которым может обращаться DeepSeek Harness.',
   refresh: 'Обновить',
   add: 'Добавить авторизованный каталог',

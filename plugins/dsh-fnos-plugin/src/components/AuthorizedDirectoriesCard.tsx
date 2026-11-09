@@ -2,6 +2,9 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react'
 import type { KeyboardEvent } from 'react'
+import type { ConfigForm } from '@deepseek-ai/dsh-client-ui-settings/client'
+import type { FnosSettings } from '../contracts/theme-contract.ts'
+import { WebActionsSetting } from './WebActionsSetting.tsx'
 import { DshIconInfoCircle, DshModal, DshTooltip } from '@tnnevol/dsh-semi-ui'
 import type { FnosLocaleKey } from '../client/locales.ts'
 import { diagnosePickerResult, isPickerCancellation, isPickerNoSelection, logPickerSdkEvent, logPickerSdkValue } from '../client/input-references/picker-result.ts'
@@ -40,6 +43,7 @@ type LoadState =
 
 export interface AuthorizedDirectoriesCardProps {
   t: Translate
+  settings: ConfigForm<FnosSettings>
 }
 
 /**
@@ -64,12 +68,12 @@ export interface FnosDetailSubject {
  * @returns 本插件的组合包详情页上渲染卡片，否则 `null`。
  */
 export function AuthorizedDirectoriesDetailSection({
-  t, subject,
+  t, subject, settings,
 }: AuthorizedDirectoriesCardProps & { subject?: FnosDetailSubject | undefined }) {
   if (subject === undefined) return null
   if (subject.kind !== 'bundle') return null
   if (subject.pkg?.name !== FNOS_PACKAGE_NAME) return null
-  return <AuthorizedDirectoriesCard t={t} />
+  return <AuthorizedDirectoriesCard t={t} settings={settings} />
 }
 
 
@@ -113,7 +117,7 @@ function errorMessage(error: unknown, t: Translate, action: 'load' | 'pick' | 'd
 }
 
 /** Render the fnOS authorization card for the plugin detail page. */
-function AuthorizedDirectoriesCard({ t }: AuthorizedDirectoriesCardProps) {
+function AuthorizedDirectoriesCard({ t, settings }: AuthorizedDirectoriesCardProps) {
   const [state, setState] = useState<LoadState>({ status: 'idle', directories: [] })
   const [busy, setBusy] = useState(false)
   const [savedProxyPaths, setSavedProxyPaths] = useState('')
@@ -324,6 +328,7 @@ function AuthorizedDirectoriesCard({ t }: AuthorizedDirectoriesCardProps) {
           <span className="dsh-fnos-authorized-card-description">{t('intro')}</span>
         </span>
       </div>
+      <WebActionsSetting settings={settings} t={t} />
       <DshModal
         visible={pendingDeletePath !== undefined}
         title={t('delete')}

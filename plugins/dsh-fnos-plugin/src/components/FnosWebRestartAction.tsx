@@ -1,6 +1,8 @@
 /** DSH sidebar action for restarting the upstream Web process through fnOS. */
 
-import { useCallback, useState } from 'react'
+import { useCallback, useState, useSyncExternalStore } from 'react'
+import type { ConfigForm } from '@deepseek-ai/dsh-client-ui-settings/client'
+import type { FnosSettings } from '../contracts/theme-contract.ts'
 import { DshButton, DshButtonGroup, DshIconButton, DshIconRefresh2, DshIconSync } from '@tnnevol/dsh-semi-ui'
 import { isEmbeddedFnosFrame } from '../client/services/sdk-carrier.ts'
 import type { FnosLocaleKey } from '../client/locales.ts'
@@ -10,6 +12,7 @@ type Translate = (key: FnosLocaleKey) => string
 interface FnosWebRestartActionProps {
   wide: boolean
   t: Translate
+  settings: ConfigForm<FnosSettings>
 }
 
 function gatewayControlUrl(path: string): string {
@@ -21,7 +24,10 @@ function gatewayControlUrl(path: string): string {
   return path
 }
 
-export function FnosWebRestartAction({ wide, t }: FnosWebRestartActionProps) {
+export function FnosWebRestartAction({ wide, t, settings }: FnosWebRestartActionProps) {
+  const subscribe = useCallback((listener: () => void) => settings.subscribe(listener), [settings])
+  const getSnapshot = useCallback(() => settings.getSnapshot(), [settings])
+  const snapshot = useSyncExternalStore(subscribe, getSnapshot, getSnapshot)
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState(false)
 
@@ -52,7 +58,7 @@ export function FnosWebRestartAction({ wide, t }: FnosWebRestartActionProps) {
     }
   }, [])
 
-  if (!isEmbeddedFnosFrame()) return null
+  if (!isEmbeddedFnosFrame() && snapshot.value?.showWebActionsOutsideIframe !== true) return null
 
   const restartLabel = error ? t('webRestartFailed') : busy ? t('webRestarting') : t('webRestart')
   const refreshLabel = t('refresh')
